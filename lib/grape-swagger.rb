@@ -1,4 +1,5 @@
 require 'kramdown'
+require 'set'
 
 module Grape
   class API
@@ -74,7 +75,8 @@ module Grape
                 swaggerVersion: "1.1",
                 basePath: parse_base_path(base_path, request),
                 operations:[],
-                apis: routes_array
+                apis: routes_array,
+                models: parse_entity_models(options[:models])
               }
             end
 
@@ -85,12 +87,13 @@ module Grape
             get "#{@@mount_path}/:name" do
               header['Access-Control-Allow-Origin'] = '*'
               header['Access-Control-Request-Method'] = '*'
-              models = []
+              models = Set.new
               routes = target_class::combined_routes[params[:name]]
               routes_array = routes.map do |route|
                 notes = route.route_notes && @@markdown ? Kramdown::Document.new(strip_heredoc(route.route_notes)).to_html : route.route_notes
                 http_codes = parse_http_codes route.route_http_codes
                 models << route.route_entity if route.route_entity
+                models += route.route_models if route.route_models
                 operations = {
                     :notes => notes,
                     :summary => route.route_description || '',
@@ -114,7 +117,7 @@ module Grape
                 resourcePath: "",
                 apis: routes_array
               }
-              api_description[:models] = parse_entity_models(models) unless models.empty?
+              api_description[:models] = parse_entity_models(models.to_a) unless models.empty?
               api_description
             end
           end
