@@ -22,13 +22,18 @@ describe "helpers" do
     it "parses params as query strings for a GET" do
       params = {
         name: { type: 'String', desc: "A name", required: true },
-        level: 'max'
+        level: 'max',
+        enumerated_param: { type: 'String', desc: "Enumerated string", values: %w[one two] },
+        enumerated_array: { type: '[String]', desc: "Enumerated array", array_values: %w[three four] }
       }
       path = "/coolness"
       method = "GET"
+
       @api.parse_params(params, path, method).should == [
         { paramType: "query", name: :name, description: "A name", dataType: "String", required: true },
-        { paramType: "query", name: :level, description: "", dataType: "String", required: false }
+        { paramType: "query", name: :level, description: "", dataType: "String", required: false },
+        { paramType: "query", name: :enumerated_param, description: "Enumerated string", dataType: "String", required: false, enum: %w[one two] },
+        { paramType: "query", name: :enumerated_array, description: "Enumerated array", dataType: "[String]", required: false, enum: %w[three four] }
       ]
     end
 
