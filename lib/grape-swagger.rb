@@ -134,9 +134,6 @@ module Grape
                   required = value.is_a?(Hash) ? !!value[:required] : false
                   paramType = path.include?(":#{param}") ? 'path' : (method == 'POST') ? 'form' : 'query'
                   name = (value.is_a?(Hash) && value[:full_name]) || param
-                  if value.is_a?(Hash)
-                    enum = value[:values] || value[:array_values]
-                  end
 
                   param_hash = {
                     paramType: paramType,
@@ -146,7 +143,14 @@ module Grape
                     required: required
                   }
 
-                  param_hash[:enum] = enum unless enum.nil?
+                  if value.is_a?(Hash)
+                    if value[:values]
+                      param_hash[:enum] = value[:values]
+                    elsif value[:array_values]
+                      param_hash[:enum] = value[:array_values]
+                      param_hash[:allowMultiple] = true
+                    end
+                  end
 
                   param_hash
                 end

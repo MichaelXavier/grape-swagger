@@ -33,7 +33,7 @@ describe "helpers" do
         { paramType: "query", name: :name, description: "A name", dataType: "String", required: true },
         { paramType: "query", name: :level, description: "", dataType: "String", required: false },
         { paramType: "query", name: :enumerated_param, description: "Enumerated string", dataType: "String", required: false, enum: %w[one two] },
-        { paramType: "query", name: :enumerated_array, description: "Enumerated array", dataType: "[String]", required: false, enum: %w[three four] }
+        { paramType: "query", name: :enumerated_array, description: "Enumerated array", dataType: "[String]", required: false, enum: %w[three four], allowMultiple: true }
       ]
     end
 
