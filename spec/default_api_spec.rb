@@ -21,6 +21,7 @@ describe "Default API" do
       "apiVersion" => "0.1",
       "swaggerVersion" => "1.1",
       "basePath" => "http://example.org",
+      "models" => {},
       "operations" => [],
       "apis" => [
         { "path" => "/swagger_doc/something.{format}" },

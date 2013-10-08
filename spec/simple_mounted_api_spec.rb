@@ -54,6 +54,7 @@ describe "a simple mounted api" do
       "swaggerVersion" => "1.1",
       "basePath" => "http://example.org",
       "operations" => [],
+      "models" => {},
       "apis" => [
         { "path" => "/swagger_doc/simple.{format}" },
         { "path" => "/swagger_doc/simple_with_headers.{format}" },

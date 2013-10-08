@@ -119,6 +119,7 @@ describe "options: " do
         "apiVersion" => "0.1",
         "swaggerVersion" => "1.1",
         "basePath" => "http://example.org",
+        "models" => {},
         "operations" => [],
         "apis" => [
           { "path" => "/v1/swagger_doc/something.{format}" },
@@ -173,6 +174,7 @@ describe "options: " do
         "swaggerVersion" => "1.1",
         "basePath" => "http://example.org",
         "operations" => [],
+        "models" => {},
         "apis" => [
           { "path" => "/swagger_doc/something.{format}" }
         ]
